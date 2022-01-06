@@ -13,7 +13,7 @@ public class Queue<E> implements QueueInterface<E> {
     private Node<E> front;
     private Node<E> back;
     private LinkedList<E> list;
-    
+
     // constructor
     public Queue() {
         front = back = null;
@@ -28,7 +28,7 @@ public class Queue<E> implements QueueInterface<E> {
      */
     public void enqueue(Node<E> element) throws NullPointerException {
         if (front == null && back == null) { // add the an element for the first time
-            list.add(element);
+            list.add(element); // add the element to the linked list in the background
             front = list.getTail(); // make front point to the tail of the list
             back = list.getHead(); // make the back point to the head of the list
         } else { // there are elements present on the list
@@ -48,15 +48,15 @@ public class Queue<E> implements QueueInterface<E> {
         if (isEmpty()) { // queue is empty
             System.out.println("queue is empty");
             return null;
-        } else if (list.getSize() == Constants.ONE) { // only one item exists on the queue, set the front and back to null
-            front = back = null;
-            list.setSize(list.getSize() - Constants.ONE); // decrement size of the by one
+        } else if (list.getSize() == Constants.ONE) { // only one item exists on the queue, set the front and back to
+                                                      // null
+            this.clear();
             return list.getHead().getData();
         } else { // queue is not empty, remove the item from the somewhere in the middle
             front = front.getPrevious(); // make front point to the previous node in the list
             list.setTail(front.getNext()); // make the list.getTail() point to the next node the front is pointing to
-            list.setSize(list.getSize() - Constants.ONE); // decrement size of the by one
-            return list.getTail().getData();
+            list.setSize(list.getSize() - Constants.ONE); // decrement size of the linked list by one
+            return list.getTail().getData(); // return the data contained in the tail node
         }
     }
 
@@ -66,17 +66,33 @@ public class Queue<E> implements QueueInterface<E> {
     public boolean isEmpty() {
         return (front == null && back == null);
     }
- 
+
     public int size() {
         return list.size();
     }
 
     /**
-     * sets front and back to null, preventing further access whichever elements may lie between.
+     * sets front and back to null, preventing further access whichever elements may
+     * lie between.
      */
     public void clear() {
         front = back = null;
         list.clear();
+    }
+
+    /**
+     * retrieves the front nodes data
+     * 
+     * @return null if the queue is empty, otherwise returns the data contained in
+     *         the front node
+     */
+    public E getFront() throws NullPointerException {
+        if (front == null) {
+            System.out.println(Constants.EMPTY_QUEUE);
+            return null;
+        } else {
+            return this.front.getData();
+        }
     }
 
     public void display() {

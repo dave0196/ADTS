@@ -11,14 +11,12 @@ public class Node<E> {
     private E data;
     private Node<E> previous;
     private Node<E> next;
-    private int occurs; // the number of times the node has been added to the list
 
     // constructor
     public Node(E data) {
         this.data = data;
         previous = null;
         next = null;
-        occurs = Constants.ONE; // the node has been created once, therefore its occurs value should be one
     }
 
     public E getData() {
@@ -43,14 +41,6 @@ public class Node<E> {
 
     public void setNext(Node<E> next) {
         this.next = next;
-    }
-
-    public int getOccurs() {
-        return occurs;
-    }
-
-    public void setOccurs(int occurs) {
-        this.occurs = occurs;
     }
 
     @Override

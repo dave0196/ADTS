@@ -27,11 +27,10 @@ public class LinkedList<E> implements LinkedListInterface<E> {
             newnode.setPrevious(null);
             newnode.setNext(null);
             size++;
-        } else if (isPresent(newnode)) { // check if the node has been added already, make a copy of it, items is
-                                         // somewhere in the middle
+        } else if (isPresent(newnode)) { // check if the node is already present on the list, makes a copy of it, this node is
+                                         // somewhere in the middle (not front nor back)
             Node<E> existingNodeCopy = new Node<>(newnode.getData()); // create a copy of the existing node that will
                                                                       // contain the same data
-            newnode.setOccurs(newnode.getOccurs() + Constants.ONE);
             add(existingNodeCopy); // recursive call
         } else { // at least one item already exists in the list and this is not the first node
                  // to be added to the list
@@ -44,6 +43,7 @@ public class LinkedList<E> implements LinkedListInterface<E> {
             head.setPrevious(null);
             size++;
         }
+        
     }
 
     /**
@@ -56,8 +56,7 @@ public class LinkedList<E> implements LinkedListInterface<E> {
         while (runner != null) {
             if (runner == node) {
                 if (runner.getPrevious() == null && runner.getNext() == null) { // at this point only this item exists
-                    head = tail = runner = null;
-                    size = Constants.ZERO;
+                    this.clear();
                     return 0;
                 } else if (runner.getPrevious() == null && runner == head) { // the item to be deleted is pointing to
                     // the head
@@ -79,11 +78,12 @@ public class LinkedList<E> implements LinkedListInterface<E> {
                     runner.setPrevious(null);
                     size--;
                     return 0;
-                }
+                } 
+                              
             }
             runner = runner.getNext();
         }
-        return -1; // at this point no items were removed, return -1
+        return -1; // at this point no items were removed return error code
 
     }
 
@@ -127,7 +127,7 @@ public class LinkedList<E> implements LinkedListInterface<E> {
             }
             runner = runner.getNext();
         }
-        return -1; // at this point no items were removed, return -1
+        return -1; // at this point no items were removed
     }
 
     public int size() {
@@ -191,7 +191,7 @@ public class LinkedList<E> implements LinkedListInterface<E> {
     }
 
     /**
-     * Sets all important entry points to null, the nodes in between head and tail
+     * Sets all list entry points to null, the nodes in between head and tail
      * remain in memory however.
      */
     public void clear() {
